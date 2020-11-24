@@ -10,7 +10,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.roomdemo.R
@@ -27,28 +26,24 @@ class UpdateFragment : Fragment() {
     private lateinit var mUserViewModel: UserViewModel
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-
-        val view = inflater.inflate(R.layout.fragment_update, container, false)
-
-        view.btnUpdate.setOnClickListener {
-            findNavController().navigate(R.id.action_update_to_list)
-        }
 
         setHasOptionsMenu(true)
 
+        // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.fragment_update, container, false)
+
+        //Assigning values to Update Fragment fields
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         view.txtUpFirstName.setText(args.currentUser.firstName)
         view.txtUpLastName.setText(args.currentUser.lastName)
         view.txtUpAge.setText(args.currentUser.age)
 
-
+        //Update button
         view.btnUpdate.setOnClickListener {
             updateData()
-
+            findNavController().navigate(R.id.action_update_to_list)
         }
-
 
         return view
 
@@ -75,7 +70,6 @@ class UpdateFragment : Fragment() {
     private fun inputCheck(firstName: String, lastName: String, age: String): Boolean {
 
         return (TextUtils.isEmpty(firstName) && TextUtils.isEmpty(lastName) && TextUtils.isEmpty(age))
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -94,8 +88,6 @@ class UpdateFragment : Fragment() {
     }
 
     private fun deleteUser(user: User) {
-
-
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Yes"){ _, _ ->
